@@ -6,22 +6,24 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchSpot } from '../actions/index';
+import { fetchSpots } from '../actions/index';
+import Loading from '../components/Loading'
 
 class SpotList extends Component<{}> {
 
-  _keyExtractor = (item, index) => item.title;
+  _keyExtractor = (item, index) => item.id;
 
   componentDidMount() {
-    this.props.fetchSpot(1);
+    this.props.fetchSpots(1);
   }
 
 	render() {
+
 		return (
 				 <FlatList
           data={this.props.spots}
           keyExtractor={this._keyExtractor}
-          renderItem={({item}) => <Text style={styles.spot}>{item.title}</Text>}
+          renderItem={({item}) => <Text style={styles.spot}>{item.title.rendered}</Text>}
      		 />
 			)
 	}
@@ -33,9 +35,14 @@ const styles = StyleSheet.create({
   }
 });
 
-
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchSpot }, dispatch)
+  return bindActionCreators({ fetchSpots }, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(SpotList);
+function mapStateToProps(state) {
+	return {
+	  spots: state.spots
+	};
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(SpotList);

@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchSpots } from '../actions/index';
+import { searchSpots, fetchSpots } from '../actions/index';
 
 class SearchBar extends Component<{}> {
   constructor(props) {
@@ -18,7 +18,11 @@ class SearchBar extends Component<{}> {
   }
 
   handleSubmit = () => {
-    alert(`test: `+this.state.term);
+    if(this.state.term !== ''){
+      this.props.searchSpots(this.state.term);
+    } else {
+      this.props.fetchSpots(1);
+    }
   }
 
 	render() {
@@ -42,10 +46,8 @@ const styles = StyleSheet.create({
 });
 
 
-function mapStateToProps(state) {
-	return {
-	  spots: state.spots
-	};
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ searchSpots, fetchSpots }, dispatch)
 }
 
-export default connect(mapStateToProps)(SpotList);
+export default connect(null, mapDispatchToProps)(SearchBar);

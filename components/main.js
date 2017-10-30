@@ -4,12 +4,14 @@ import {
   Text,
   View
 } from 'react-native';
-import SpotList from '../containers/spot_list'
+import SpotList from '../containers/spot_list';
+import SeachBar from '../containers/search_bar';
 
 export default class Main extends Component<{}> {
   render() {
     return (
         <View>
+        <SeachBar/>
         <SpotList/>
         </View>
     );
