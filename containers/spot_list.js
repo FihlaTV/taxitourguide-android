@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import {
   FlatList,
   Text,
-  StyleSheet
+  StyleSheet,
+  View,
+  ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchSpots } from '../actions/index';
-import Loading from '../components/Loading'
+import Spot from '../components/spot';
 
 class SpotList extends Component<{}> {
 
@@ -17,21 +19,44 @@ class SpotList extends Component<{}> {
     this.props.fetchSpots(1);
   }
 
-	render() {
+  static navigationOptions = {
+    tabBarLabel: 'TOURIST SPOTS',
+  }
 
-		return (
-				 <FlatList
+  renderList() {
+    if(this.props.spots.length >= 1) {
+      return (
+         <FlatList
           data={this.props.spots}
+          style={styles.theList}
           keyExtractor={this._keyExtractor}
-          renderItem={({item}) => <Text style={styles.spot}>{item.title.rendered}</Text>}
-     		 />
+          renderItem={({item}) => <Spot item={item}/>}
+         />
+      );
+    } else {
+      return <ActivityIndicator style={styles.theList} size='large'></ActivityIndicator>;
+    }
+    
+  }
+
+	render() {
+		return (
+      <View style={this.props.spots.length >= 1 ? styles.theList : styles.theLoader}>
+				 {this.renderList()}
+      </View>
 			)
 	}
 }
 
 const styles = StyleSheet.create({
-  spot: {
-    color: '#000000'
+  theList: {
+    flex:1
+  },
+  theLoader: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
   }
 });
 
