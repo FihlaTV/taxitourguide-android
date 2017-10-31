@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const ROOT_URL = `http://thewebguysnetwork.com/taxitourguide/wp-json/wp/v2/spot`;
+const ROOT_URL = `http://taxitourguide.9baguio.com/wp-json/wp/v2/spot`;
 
 
 export const FETCH_SPOTS = 'FETCH_SPOTS';

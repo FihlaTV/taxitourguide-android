@@ -34,7 +34,9 @@ class SpotList extends Component<{}> {
          />
       );
     } else {
-      return <ActivityIndicator style={styles.theList} size='large'></ActivityIndicator>;
+      return (
+        <ActivityIndicator style={styles.theList} size='large'></ActivityIndicator>
+        );
     }
     
   }
